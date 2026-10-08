@@ -1,0 +1,45 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Read version
+        shell: pwsh
+        run: "Add-Content -Path $env:GITHUB_ENV -Value ('APP_VERSION=' + $env:GITHUB_REF_NAME.TrimStart('v'))"
+
+      - name: Test
+        run: dotnet run --project .\tests\Shizi.SmokeTests\Shizi.SmokeTests.csproj --configuration Release
+
+      - name: Publish self-contained app
+        run: dotnet publish .\src\Shizi\Shizi.csproj --configuration Release --runtime win-x64 --self-contained true --output .\artifacts\release\publish
+
+      - name: Create portable archive
+        shell: pwsh
+        run: Compress-Archive -Path .\artifacts\release\publish\* -DestinationPath ".\artifacts\release\Shizi-v$env:APP_VERSION-win-x64.zip" -CompressionLevel Optimal
+
+      - name: Install Inno Setup
+        run: choco install innosetup --no-progress --yes
+
+      - name: Build installer
+        shell: pwsh
+        run: '& "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "/DAppVersion=$env:APP_VERSION" "/DPublishDir=$pwd\artifacts\release\publish" "/DOutputDir=$pwd\artifacts\release" .\installer\Shizi.iss'
+
+      - name: Create GitHub release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create $env:GITHUB_REF_NAME .\artifacts\release\Shizi-Setup-v$env:APP_VERSION-win-x64.exe .\artifacts\release\Shizi-v$env:APP_VERSION-win-x64.zip --repo $env:GITHUB_REPOSITORY --generate-notes --title "Shizi $env:GITHUB_REF_NAME"

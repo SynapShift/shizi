@@ -14,6 +14,7 @@
     <RootNamespace>Shizi</RootNamespace>
     <Product>拾字</Product>
     <Description>框选屏幕上的文字，立即复制。</Description>
+    <Version>0.1.0</Version>
   </PropertyGroup>
   <ItemGroup>
     <Resource Include="Assets\Shizi.png" />

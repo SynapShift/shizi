@@ -1,89 +1,87 @@
 <p align="center">
-  <img src="src/Shizi/Assets/Shizi.png" width="72" alt="拾字图标" />
+  <img src="src/Shizi/Assets/Shizi.png" width="88" alt="Shizi logo" />
 </p>
 
-<h1 align="center">拾字 Shizi</h1>
+<h1 align="center">Shizi — Screen OCR to Clipboard for Windows</h1>
 
-> 看见文字，顺手拾走。
+<p align="center">Capture any text on your screen, recognize it locally, and paste it anywhere.</p>
 
-拾字是一个本地优先的 Windows 屏幕取字工具。按下全局快捷键，框选网页、图片、扫描 PDF 或桌面上的文字；识别完成后内容会自动进入剪贴板，可以直接粘贴到正在工作的地方。
+<p align="center"><strong>English</strong> · <a href="README.zh-CN.md">简体中文</a></p>
 
-项目目前处于早期开发阶段，欢迎试用、报告问题和参与贡献。
+Shizi (拾字) is an open-source, privacy-first **Windows screen OCR**, **screenshot text extractor**, and **OCR-to-clipboard** utility powered by PP-OCRv5. Press a global shortcut, draw a box around text in a webpage, image, scanned PDF, video, or desktop app, and the recognized text is copied to your clipboard automatically.
 
-## 当前能力
+## Download
 
-- `Alt + Shift + A` 全局快捷键唤起
-- 多显示器区域框选
-- PP-OCRv5 中文模型优先、Windows OCR 自动兜底的离线识别
-- 自动合并网页和 PDF 的视觉断行
-- 自动复制到剪贴板
-- 托盘常驻与轻量结果提示
-- 可选保留原始换行
-- 可在主界面设置是否随 Windows 开机自动运行
+Download the latest version from [GitHub Releases](https://github.com/SynapShift/shizi/releases/latest).
 
-## 设计原则
+| Package | Best for |
+| --- | --- |
+| `Shizi-Setup-*-win-x64.exe` | Recommended. Install once, then launch Shizi from the Start menu. |
+| `Shizi-*-win-x64.zip` | Portable. Extract the archive and double-click `Shizi.exe`. |
 
-- **少一步：** 默认流程只有唤起、框选、粘贴。
-- **本地优先：** 当前版本不会上传截图。
-- **安静但精致：** 不弹出阻塞式结果窗口，反馈短促清晰。
-- **能力克制：** 新功能必须围绕“框选后的下一步”，不做杂乱的工具箱。
+Both packages include the .NET runtime and local OCR models. No separate runtime or model download is required.
 
-## 环境要求
+**System requirements:** Windows 10 version 1903 or later, x64. Windows 11 is recommended.
 
-- Windows 10 版本 1903 或更高版本，推荐 Windows 11
-- .NET 8 SDK（开发与构建）
-- 建议安装中文或英文 Windows 语言包，以便高精度引擎不可用时使用系统 OCR 兜底
+## Features
 
-## 本地运行
+- Global `Alt + Shift + A` capture shortcut
+- Multi-monitor region capture
+- Local PP-OCRv5 Chinese and English recognition
+- Automatic Windows OCR fallback
+- Smart cleanup of visual line breaks and artificial Chinese spacing
+- Instant copy to clipboard
+- Optional preservation of original line breaks
+- System tray operation and lightweight result feedback
+- User-controlled launch at Windows sign-in
+- No screenshot uploads
 
-已经构建过项目时，可以双击 `run.cmd`。也可以在终端运行：
+## Usage
+
+1. Start Shizi.
+2. Press `Alt + Shift + A`, or choose **Start capture** in the main window.
+3. Drag around the text you want to extract.
+4. Release the mouse and wait for the copied notification.
+5. Press `Ctrl + V` in any text field.
+
+Press `Esc` to cancel a capture without changing the clipboard. Closing the main window keeps Shizi running in the system tray.
+
+## Why Shizi?
+
+- **One less step:** capture, select, paste—no result dialog to manage.
+- **Local by default:** OCR runs on your device and screenshots are not uploaded.
+- **Built for Chinese text:** PP-OCRv5 plus cleanup rules handle mixed Chinese and English content.
+- **Works beyond the browser:** extract text from desktop apps, images, videos, and scanned documents.
+
+## Build from source
+
+Development requires the .NET 8 SDK on Windows.
 
 ```powershell
 dotnet run --project .\src\Shizi\Shizi.csproj
-```
-
-构建 Release：
-
-```powershell
 dotnet build .\src\Shizi\Shizi.csproj -c Release
-```
-
-运行 smoke tests：
-
-```powershell
 dotnet run --project .\tests\Shizi.SmokeTests\Shizi.SmokeTests.csproj -c Release
 ```
 
-## 使用方法
+## Roadmap
 
-1. 启动拾字。
-2. 按 `Alt + Shift + A`，或点击首页的“开始框选”。
-3. 拖动鼠标框住需要提取的文字。
-4. 松开鼠标，等待“已复制”提示。
-5. 在任意输入框按 `Ctrl + V`。
+- [ ] Configurable global shortcut
+- [x] Local PP-OCRv5 engine
+- [x] Installer and portable Windows packages
+- [ ] Translate and copy
+- [ ] Extract image tables into editable data
+- [ ] Optional local recognition history
+- [ ] Chromium extension with DOM extraction and OCR fallback
 
-按 `Esc` 可以取消框选。关闭主窗口后，拾字会继续在系统托盘运行。
-“开机时自动运行拾字”可在主界面直接开启或关闭；自动启动时不会弹出主窗口，只在托盘静默运行。
+## Privacy
 
-## 路线图
+Shizi uses the bundled local PP-OCRv5 model first and falls back to the Windows OCR API. Screenshots are never sent to a server. The Windows OCR fallback may create a short-lived PNG in the system temporary directory; it is deleted immediately after recognition.
 
-- [ ] 可配置全局快捷键
-- [x] PP-OCRv5 本地中文 OCR 引擎
-- [ ] 翻译后复制
-- [ ] 图片表格转可编辑表格
-- [ ] 可选的本地识别历史
-- [ ] Chromium 浏览器扩展：DOM 精确提取、OCR 兜底
-- [ ] 正式应用图标、安装包和自动 Release
+Any future cloud OCR or AI feature must be clearly labeled, disabled by default, and keep a fully local path available.
 
-## 隐私
+## Feedback and contributions
 
-当前实现优先使用本地 PP-OCRv5 模型，失败时自动切换到 Windows OCR，截图不会发送到网络。Windows OCR 兜底过程中会在系统临时目录创建短生命周期的 PNG 文件，并在识别结束后立即删除。
-
-若未来加入云端 OCR 或 AI 能力，相关功能必须明确标注、默认关闭，并提供完全本地运行的路径。
-
-## 反馈与贡献
-
-欢迎提交 [Issue](https://github.com/SynapShift/shizi/issues/new/choose) 或 Pull Request。问题报告会通过模板收集必要的运行环境和复现信息；如需附图，请先移除账号、聊天内容等敏感信息。
+Issues and pull requests are welcome. Use the [issue form](https://github.com/SynapShift/shizi/issues/new/choose) for bug reports. Remove account details, conversations, and other sensitive information before attaching screenshots.
 
 ## License
 
