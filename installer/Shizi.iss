@@ -10,6 +10,10 @@
   #define OutputDir "..\artifacts\release"
 #endif
 
+#ifndef ChineseMessages
+  #define ChineseMessages "..\artifacts\release\ChineseSimplified.isl"
+#endif
+
 [Setup]
 AppId={{C3E4AF3B-4C2B-4D48-B6E4-CE7D85514004}
 AppName=拾字 Shizi
@@ -35,7 +39,7 @@ CloseApplications=yes
 RestartApplications=no
 
 [Languages]
-Name: "chinesesimp"; MessagesFile: "compiler:Languages\ChineseSimplified.isl"
+Name: "chinesesimp"; MessagesFile: "{#ChineseMessages}"
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Tasks]

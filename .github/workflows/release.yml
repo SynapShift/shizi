@@ -34,9 +34,13 @@ jobs:
       - name: Install Inno Setup
         run: choco install innosetup --no-progress --yes
 
+      - name: Download Chinese installer translation
+        shell: pwsh
+        run: Invoke-WebRequest https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/ChineseSimplified.isl -OutFile .\artifacts\release\ChineseSimplified.isl
+
       - name: Build installer
         shell: pwsh
-        run: '& "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "/DAppVersion=$env:APP_VERSION" "/DPublishDir=$pwd\artifacts\release\publish" "/DOutputDir=$pwd\artifacts\release" .\installer\Shizi.iss'
+        run: '& "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "/DAppVersion=$env:APP_VERSION" "/DPublishDir=$pwd\artifacts\release\publish" "/DOutputDir=$pwd\artifacts\release" "/DChineseMessages=$pwd\artifacts\release\ChineseSimplified.isl" .\installer\Shizi.iss'
 
       - name: Create GitHub release
         shell: pwsh
