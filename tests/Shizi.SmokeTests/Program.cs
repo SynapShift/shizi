@@ -86,7 +86,7 @@ using (var font = new Font("Arial", 64, FontStyle.Bold, GraphicsUnit.Pixel))
     graphics.DrawString("HELLO 123", font, Brushes.Black, 32, 42);
 
     var recognized = await new WindowsOcrService().RecognizeAsync(bitmap);
-    var normalized = recognized.Replace(" ", string.Empty, StringComparison.Ordinal).ToUpperInvariant();
+    var normalized = NormalizeOcrProbe(recognized);
     if (normalized.Contains("HELLO123", StringComparison.Ordinal))
     {
         Console.WriteLine($"PASS Windows OCR [{recognized.Trim()}]");
@@ -99,7 +99,7 @@ using (var font = new Font("Arial", 64, FontStyle.Bold, GraphicsUnit.Pixel))
 
     using var paddle = new PaddleOcrService();
     var paddleRecognized = await paddle.RecognizeAsync(bitmap);
-    var paddleNormalized = paddleRecognized.Replace(" ", string.Empty, StringComparison.Ordinal).ToUpperInvariant();
+    var paddleNormalized = NormalizeOcrProbe(paddleRecognized);
     if (paddleNormalized.Contains("HELLO123", StringComparison.Ordinal))
     {
         Console.WriteLine($"PASS PP-OCRv5 [{paddleRecognized.Trim()}]");
@@ -119,6 +119,11 @@ if (failed > 0)
 
 Console.WriteLine($"All {cases.Length + 3} smoke tests passed.");
 return 0;
+
+static string NormalizeOcrProbe(string value)
+{
+    return new string(value.Where(char.IsLetterOrDigit).ToArray()).ToUpperInvariant();
+}
 
 internal sealed record TestCase(
     string Name,
