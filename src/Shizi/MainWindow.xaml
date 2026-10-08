@@ -1,0 +1,118 @@
+<Window x:Class="Shizi.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        Title="拾字"
+        Width="860" Height="580"
+        MinWidth="800" MinHeight="540"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None" ResizeMode="CanResize"
+        Background="#0D0F0E"
+        Foreground="{StaticResource InkBrush}"
+        TextOptions.TextRenderingMode="Grayscale"
+        TextOptions.TextFormattingMode="Display">
+  <shell:WindowChrome.WindowChrome>
+    <shell:WindowChrome CaptionHeight="0" ResizeBorderThickness="7" CornerRadius="16"
+                        GlassFrameThickness="0" UseAeroCaptionButtons="False" />
+  </shell:WindowChrome.WindowChrome>
+  <Grid Margin="42">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <Grid MouseLeftButtonDown="Header_MouseLeftButtonDown">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+      <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+        <Image Width="32" Height="32" Source="/Shizi;component/Assets/Shizi.png" />
+        <TextBlock Text="拾字" Margin="10,0,0,0" FontSize="18" FontWeight="SemiBold"
+                   VerticalAlignment="Center" />
+      </StackPanel>
+      <StackPanel Grid.Column="1" Orientation="Horizontal" shell:WindowChrome.IsHitTestVisibleInChrome="True">
+        <Button Width="32" Height="32" Margin="0,0,4,0" Click="MinimizeButton_Click"
+                Style="{StaticResource WindowButton}"
+                FontFamily="Segoe UI" FontSize="17" Content="−" />
+        <Button Width="32" Height="32" Click="CloseButton_Click"
+                Style="{StaticResource WindowButton}"
+                FontFamily="Segoe UI" FontSize="18" Content="×" />
+      </StackPanel>
+    </Grid>
+
+    <Grid Grid.Row="1" Margin="0,48,0,38">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="1.2*" />
+        <ColumnDefinition Width="0.8*" />
+      </Grid.ColumnDefinitions>
+
+      <StackPanel VerticalAlignment="Center" Margin="0,0,42,0">
+        <TextBlock Text="看见文字，&#x0a;顺手拾走。" FontSize="46" FontWeight="SemiBold" LineHeight="55" />
+        <TextBlock Margin="0,20,0,26" Foreground="{StaticResource MutedBrush}" FontSize="15"
+                   TextWrapping="Wrap" LineHeight="24"
+                   Text="框选网页、图片或桌面上的文字。识别完成后自动复制，直接粘贴到你正在工作的地方。" />
+        <Button Style="{StaticResource PrimaryButton}" HorizontalAlignment="Left"
+                Width="330" Click="CaptureButton_Click">
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Border Width="42" Height="42" CornerRadius="12" Background="{StaticResource AccentBrush}">
+              <Path Width="23" Height="23" Stretch="Uniform" Stroke="#11140F" StrokeThickness="1.6"
+                    StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
+                    Data="M 3,9 V3 H9 M15,3 H21 V9 M21,15 V21 H15 M9,21 H3 V15 M8,12 H16 M12,8 V16" />
+            </Border>
+            <StackPanel Grid.Column="1" Margin="13,0,16,0" VerticalAlignment="Center">
+              <TextBlock Text="开始取字" FontSize="15" FontWeight="SemiBold" />
+              <TextBlock Text="框选屏幕上的任意文字" Margin="0,3,0,0" FontSize="11"
+                         FontWeight="Normal" Foreground="#8F948C" />
+            </StackPanel>
+            <Border Grid.Column="2" Background="#242824" CornerRadius="6" Padding="7,4"
+                    VerticalAlignment="Center">
+              <TextBlock Text="Alt ⇧ A" FontFamily="Segoe UI" FontSize="10.5"
+                         FontWeight="Normal" Foreground="#AFB4AB" />
+            </Border>
+          </Grid>
+        </Button>
+      </StackPanel>
+
+      <Border Grid.Column="1" Background="{StaticResource PanelBrush}"
+              BorderBrush="{StaticResource PanelStrokeBrush}" BorderThickness="1"
+              CornerRadius="18" Padding="24" VerticalAlignment="Center">
+        <StackPanel>
+          <TextBlock Text="全局快捷键" Foreground="{StaticResource MutedBrush}" FontSize="12" />
+          <StackPanel Orientation="Horizontal" Margin="0,12,0,24">
+            <Border Background="#232723" CornerRadius="7" Padding="9,6"><TextBlock Text="Alt" /></Border>
+            <TextBlock Text=" + " Foreground="{StaticResource MutedBrush}" VerticalAlignment="Center" />
+            <Border Background="#232723" CornerRadius="7" Padding="9,6"><TextBlock Text="Shift" /></Border>
+            <TextBlock Text=" + " Foreground="{StaticResource MutedBrush}" VerticalAlignment="Center" />
+            <Border Background="#232723" CornerRadius="7" Padding="9,6"><TextBlock Text="A" /></Border>
+          </StackPanel>
+          <Separator Background="#292D2A" />
+          <CheckBox x:Name="PreserveLineBreaksCheckBox" Margin="0,22,0,0"
+                    Foreground="{StaticResource InkBrush}" FontFamily="{StaticResource UiFont}"
+                    Content="保留原始换行" />
+          <TextBlock Margin="0,8,0,0" Foreground="{StaticResource MutedBrush}" FontSize="11"
+                     TextWrapping="Wrap" Text="关闭时会自动合并网页和 PDF 中的视觉断行。" />
+          <Separator Background="#292D2A" Margin="0,20,0,0" />
+          <CheckBox x:Name="StartupCheckBox" Margin="0,20,0,0"
+                    Foreground="{StaticResource InkBrush}" FontFamily="{StaticResource UiFont}"
+                    Content="开机时自动运行拾字"
+                    Checked="StartupCheckBox_Changed" Unchecked="StartupCheckBox_Changed" />
+          <TextBlock x:Name="StartupHintText" Margin="0,8,0,0"
+                     Foreground="{StaticResource MutedBrush}" FontSize="11"
+                     TextWrapping="Wrap" Text="登录 Windows 后在托盘静默运行。" />
+        </StackPanel>
+      </Border>
+    </Grid>
+
+    <Grid Grid.Row="2">
+      <TextBlock Text="本地 OCR · 图片不会上传" Foreground="#74776F" FontSize="11" />
+      <TextBlock HorizontalAlignment="Right" Text="关闭窗口后继续在托盘运行" Foreground="#74776F" FontSize="11" />
+    </Grid>
+  </Grid>
+</Window>
