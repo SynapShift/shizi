@@ -1,0 +1,65 @@
+name: 问题反馈
+description: 报告识别、截图、剪贴板或界面问题
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈。请勿上传包含账号、聊天记录或其他隐私信息的原始截图。
+
+  - type: input
+    id: windows-version
+    attributes:
+      label: Windows 版本
+      placeholder: 例如 Windows 11 24H2
+    validations:
+      required: true
+
+  - type: input
+    id: display
+    attributes:
+      label: 显示环境
+      description: 请填写显示器数量和缩放比例。
+      placeholder: 例如双屏，主屏 150%，副屏 100%
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. 按下 Alt + Shift + A
+        2. 框选……
+        3. 出现……
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际结果
+      description: 识别问题请粘贴实际得到的文字。
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望结果
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: 补充截图
+      description: 可选。上传前请确认图片已经脱敏。
+
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: 隐私确认
+      options:
+        - label: 我确认提交的内容不包含敏感或个人信息。
+          required: true

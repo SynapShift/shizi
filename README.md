@@ -81,14 +81,9 @@ dotnet run --project .\tests\Shizi.SmokeTests\Shizi.SmokeTests.csproj -c Release
 
 若未来加入云端 OCR 或 AI 能力，相关功能必须明确标注、默认关闭，并提供完全本地运行的路径。
 
-## 贡献
+## 反馈与贡献
 
-项目尚处于快速成形阶段。提交 Issue 时请尽量附上：
-
-- Windows 版本和显示缩放比例
-- 单屏或多屏环境
-- 可脱敏的原始截图
-- 期望文字与实际识别结果
+欢迎提交 [Issue](https://github.com/SynapShift/shizi/issues/new/choose) 或 Pull Request。问题报告会通过模板收集必要的运行环境和复现信息；如需附图，请先移除账号、聊天内容等敏感信息。
 
 ## License
 
