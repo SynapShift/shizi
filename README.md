@@ -21,9 +21,11 @@ Download the latest version from [GitHub Releases](https://github.com/SynapShift
 | `Shizi-*-macOS-universal.dmg` | macOS installer for Apple Silicon and Intel Macs. |
 | `Shizi-*-macOS-universal.zip` | Portable macOS app for Apple Silicon and Intel Macs. |
 
-Both packages include the .NET runtime and local OCR models. No separate runtime or model download is required.
+Windows packages include the .NET runtime and local PP-OCRv5 models. The macOS app uses the Vision framework built into macOS. No separate runtime or model download is required.
 
 **System requirements:** Windows 10 version 1903 or later (x64), or macOS 13 Ventura or later. The first capture on macOS asks for Screen Recording permission.
+
+The current macOS package is ad-hoc signed but not Apple-notarized. On first launch, Control-click Shizi, choose **Open**, and confirm once in Gatekeeper.
 
 ## Features
 
@@ -84,7 +86,7 @@ swift run --package-path ./src/ShiziMac
 
 ## Privacy
 
-Shizi uses the bundled local PP-OCRv5 model first and falls back to the Windows OCR API. Screenshots are never sent to a server. The Windows OCR fallback may create a short-lived PNG in the system temporary directory; it is deleted immediately after recognition.
+On Windows, Shizi uses the bundled local PP-OCRv5 model first and falls back to the Windows OCR API. On macOS, it uses the on-device Apple Vision framework. Screenshots are never sent to a server. The Windows OCR fallback may create a short-lived PNG in the system temporary directory; it is deleted immediately after recognition.
 
 ## Feedback and contributions
 

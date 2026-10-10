@@ -25,7 +25,7 @@ jobs:
         run: dotnet run --project .\tests\Shizi.SmokeTests\Shizi.SmokeTests.csproj --configuration Release
 
       - name: Publish self-contained app
-        run: dotnet publish .\src\Shizi\Shizi.csproj --configuration Release --runtime win-x64 --self-contained true --output .\artifacts\release\publish
+        run: dotnet publish .\src\Shizi\Shizi.csproj --configuration Release --runtime win-x64 --self-contained true --property:Version=$env:APP_VERSION --output .\artifacts\release\publish
 
       - name: Create portable archive
         shell: pwsh

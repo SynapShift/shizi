@@ -21,9 +21,11 @@
 | `Shizi-*-macOS-universal.dmg` | macOS 安装镜像，同时支持 Apple 芯片和 Intel Mac。 |
 | `Shizi-*-macOS-universal.zip` | macOS 便携版，同时支持 Apple 芯片和 Intel Mac。 |
 
-两个版本都已包含 .NET 运行时和本地 OCR 模型，无需另外安装运行环境或下载模型。
+Windows 安装包已包含 .NET 运行时和本地 PP-OCRv5 模型；macOS 版本使用系统自带的 Vision 框架。两个平台都无需另外安装运行环境或下载模型。
 
 **系统要求：** Windows 10 1903 或更高版本（x64），或 macOS 13 Ventura 及以上版本。Mac 首次取字时需要授予“屏幕录制”权限。
+
+当前 macOS 安装包使用临时代码签名，尚未经过 Apple 公证。首次打开时请按住 Control 点击拾字，选择“打开”，并在 Gatekeeper 中确认一次。
 
 ## 功能
 
@@ -84,7 +86,7 @@ swift run --package-path ./src/ShiziMac
 
 ## 隐私
 
-拾字优先使用随软件提供的本地 PP-OCRv5 模型，失败时自动切换到 Windows OCR，截图不会发送到服务器。Windows OCR 兜底过程中可能在系统临时目录创建短生命周期的 PNG 文件，识别结束后会立即删除。
+Windows 版优先使用随软件提供的本地 PP-OCRv5 模型，失败时自动切换到 Windows OCR；macOS 版使用设备内置的 Apple Vision 框架。截图不会发送到服务器。Windows OCR 兜底过程中可能在系统临时目录创建短生命周期的 PNG 文件，识别结束后会立即删除。
 
 
 ## 反馈与贡献
