@@ -77,7 +77,6 @@ dotnet run --project .\tests\Shizi.SmokeTests\Shizi.SmokeTests.csproj -c Release
 
 拾字优先使用随软件提供的本地 PP-OCRv5 模型，失败时自动切换到 Windows OCR，截图不会发送到服务器。Windows OCR 兜底过程中可能在系统临时目录创建短生命周期的 PNG 文件，识别结束后会立即删除。
 
-未来如加入云端 OCR 或 AI 功能，必须明确标注、默认关闭，并保留完全本地运行的路径。
 
 ## 反馈与贡献
 
