@@ -77,8 +77,6 @@ dotnet run --project .\tests\Shizi.SmokeTests\Shizi.SmokeTests.csproj -c Release
 
 Shizi uses the bundled local PP-OCRv5 model first and falls back to the Windows OCR API. Screenshots are never sent to a server. The Windows OCR fallback may create a short-lived PNG in the system temporary directory; it is deleted immediately after recognition.
 
-Any future cloud OCR or AI feature must be clearly labeled, disabled by default, and keep a fully local path available.
-
 ## Feedback and contributions
 
 Issues and pull requests are welcome. Use the [issue form](https://github.com/SynapShift/shizi/issues/new/choose) for bug reports. Remove account details, conversations, and other sensitive information before attaching screenshots.
