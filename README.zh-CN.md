@@ -2,13 +2,13 @@
   <img src="src/Shizi/Assets/Shizi.png" width="88" alt="拾字 Logo" />
 </p>
 
-<h1 align="center">拾字 Shizi — Windows 屏幕 OCR 取字工具</h1>
+<h1 align="center">拾字 Shizi — Windows 与 macOS 屏幕 OCR 取字工具</h1>
 
 <p align="center">框选屏幕文字，本地识别，自动复制，随处粘贴。</p>
 
 <p align="center"><a href="README.md">English</a> · <strong>简体中文</strong></p>
 
-拾字是一款开源、隐私优先的 **Windows 屏幕 OCR**、**截图文字提取**与 **OCR 自动复制**工具，使用 PP-OCRv5 本地模型。按下全局快捷键，框选网页、图片、扫描 PDF、视频或桌面软件中的文字，识别结果会自动进入剪贴板。
+拾字是一款支持 Windows 与 macOS、开源且隐私优先的**屏幕 OCR**、**截图文字提取**与 **OCR 自动复制**工具。按下全局快捷键，框选网页、图片、扫描 PDF、视频或桌面软件中的文字，识别结果会自动进入剪贴板。
 
 ## 下载
 
@@ -18,16 +18,18 @@
 | --- | --- |
 | `Shizi-Setup-*-win-x64.exe` | 推荐。安装一次，之后可从开始菜单启动拾字。 |
 | `Shizi-*-win-x64.zip` | 便携版。解压后双击 `Shizi.exe` 即可使用。 |
+| `Shizi-*-macOS-universal.dmg` | macOS 安装镜像，同时支持 Apple 芯片和 Intel Mac。 |
+| `Shizi-*-macOS-universal.zip` | macOS 便携版，同时支持 Apple 芯片和 Intel Mac。 |
 
 两个版本都已包含 .NET 运行时和本地 OCR 模型，无需另外安装运行环境或下载模型。
 
-**系统要求：** Windows 10 1903 或更高版本，x64；推荐 Windows 11。
+**系统要求：** Windows 10 1903 或更高版本（x64），或 macOS 13 Ventura 及以上版本。Mac 首次取字时需要授予“屏幕录制”权限。
 
 ## 功能
 
-- `Alt + Shift + A` 全局快捷键唤起
+- Windows 使用 `Alt + Shift + A`，macOS 使用 `Option + Shift + A`
 - 多显示器区域框选
-- PP-OCRv5 中英文离线识别
+- Windows 使用 PP-OCRv5，macOS 使用 Apple Vision，均在本地识别
 - Windows OCR 自动兜底
 - 自动清理视觉断行和中文伪空格
 - 识别完成后自动复制到剪贴板
@@ -55,7 +57,7 @@
 
 ## 从源码构建
 
-开发环境需要 Windows 和 .NET 8 SDK。
+Windows 开发需要 .NET 8 SDK；macOS 开发需要 Swift 5.9 或更高版本。
 
 ```powershell
 dotnet run --project .\src\Shizi\Shizi.csproj
@@ -63,11 +65,18 @@ dotnet build .\src\Shizi\Shizi.csproj -c Release
 dotnet run --project .\tests\Shizi.SmokeTests\Shizi.SmokeTests.csproj -c Release
 ```
 
+```bash
+swift test --package-path ./src/ShiziMac
+swift run --package-path ./src/ShiziMac
+```
+
 ## 路线图
 
 - [ ] 自定义全局快捷键
 - [x] PP-OCRv5 本地识别引擎
 - [x] Windows 安装包与便携压缩包
+- [x] 使用 Apple Vision OCR 的原生 macOS 版本
+- [x] macOS 通用 DMG 与 ZIP 安装包
 - [ ] 翻译后复制
 - [ ] 图片表格转可编辑数据
 - [ ] 可选的本地识别历史

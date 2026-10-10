@@ -47,3 +47,20 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh release create $env:GITHUB_REF_NAME .\artifacts\release\Shizi-Setup-v$env:APP_VERSION-win-x64.exe .\artifacts\release\Shizi-v$env:APP_VERSION-win-x64.zip --repo $env:GITHUB_REPOSITORY --generate-notes --title "Shizi $env:GITHUB_REF_NAME"
+
+  macos:
+    needs: windows
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Read version
+        run: echo "APP_VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+
+      - name: Build universal app packages
+        run: ./scripts/package-macos.sh "$APP_VERSION" ./artifacts/release
+
+      - name: Upload macOS assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "$GITHUB_REF_NAME" ./artifacts/release/Shizi-v$APP_VERSION-macOS-universal.zip ./artifacts/release/Shizi-v$APP_VERSION-macOS-universal.dmg --repo "$GITHUB_REPOSITORY" --clobber

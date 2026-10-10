@@ -2,13 +2,13 @@
   <img src="src/Shizi/Assets/Shizi.png" width="88" alt="Shizi logo" />
 </p>
 
-<h1 align="center">Shizi — Screen OCR to Clipboard for Windows</h1>
+<h1 align="center">Shizi — Screen OCR to Clipboard</h1>
 
 <p align="center">Capture any text on your screen, recognize it locally, and paste it anywhere.</p>
 
 <p align="center"><strong>English</strong> · <a href="README.zh-CN.md">简体中文</a></p>
 
-Shizi (拾字) is an open-source, privacy-first **Windows screen OCR**, **screenshot text extractor**, and **OCR-to-clipboard** utility powered by PP-OCRv5. Press a global shortcut, draw a box around text in a webpage, image, scanned PDF, video, or desktop app, and the recognized text is copied to your clipboard automatically.
+Shizi (拾字) is an open-source, privacy-first **screen OCR**, **screenshot text extractor**, and **OCR-to-clipboard** utility for Windows and macOS. Press a global shortcut, draw a box around text in a webpage, image, scanned PDF, video, or desktop app, and the recognized text is copied to your clipboard automatically.
 
 ## Download
 
@@ -18,16 +18,18 @@ Download the latest version from [GitHub Releases](https://github.com/SynapShift
 | --- | --- |
 | `Shizi-Setup-*-win-x64.exe` | Recommended. Install once, then launch Shizi from the Start menu. |
 | `Shizi-*-win-x64.zip` | Portable. Extract the archive and double-click `Shizi.exe`. |
+| `Shizi-*-macOS-universal.dmg` | macOS installer for Apple Silicon and Intel Macs. |
+| `Shizi-*-macOS-universal.zip` | Portable macOS app for Apple Silicon and Intel Macs. |
 
 Both packages include the .NET runtime and local OCR models. No separate runtime or model download is required.
 
-**System requirements:** Windows 10 version 1903 or later, x64. Windows 11 is recommended.
+**System requirements:** Windows 10 version 1903 or later (x64), or macOS 13 Ventura or later. The first capture on macOS asks for Screen Recording permission.
 
 ## Features
 
-- Global `Alt + Shift + A` capture shortcut
+- Global `Alt + Shift + A` on Windows and `Option + Shift + A` on macOS
 - Multi-monitor region capture
-- Local PP-OCRv5 Chinese and English recognition
+- Local PP-OCRv5 recognition on Windows and Apple Vision recognition on macOS
 - Automatic Windows OCR fallback
 - Smart cleanup of visual line breaks and artificial Chinese spacing
 - Instant copy to clipboard
@@ -55,7 +57,7 @@ Press `Esc` to cancel a capture without changing the clipboard. Closing the main
 
 ## Build from source
 
-Development requires the .NET 8 SDK on Windows.
+Windows development requires the .NET 8 SDK. macOS development requires Swift 5.9 or later.
 
 ```powershell
 dotnet run --project .\src\Shizi\Shizi.csproj
@@ -63,11 +65,18 @@ dotnet build .\src\Shizi\Shizi.csproj -c Release
 dotnet run --project .\tests\Shizi.SmokeTests\Shizi.SmokeTests.csproj -c Release
 ```
 
+```bash
+swift test --package-path ./src/ShiziMac
+swift run --package-path ./src/ShiziMac
+```
+
 ## Roadmap
 
 - [ ] Configurable global shortcut
 - [x] Local PP-OCRv5 engine
 - [x] Installer and portable Windows packages
+- [x] Native macOS app with Apple Vision OCR
+- [x] Universal macOS DMG and ZIP packages
 - [ ] Translate and copy
 - [ ] Extract image tables into editable data
 - [ ] Optional local recognition history

@@ -1,0 +1,29 @@
+name: macOS
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/ShiziMac/**"
+      - "scripts/package-macos.sh"
+      - ".github/workflows/macos.yml"
+  pull_request:
+    paths:
+      - "src/ShiziMac/**"
+      - "scripts/package-macos.sh"
+      - ".github/workflows/macos.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v5
+      - name: Test
+        run: swift test --package-path ./src/ShiziMac
+      - name: Build universal app packages
+        run: ./scripts/package-macos.sh 0.2.0 ./artifacts/release
+      - name: Verify universal binary
+        run: lipo -archs ./artifacts/release/Shizi.app/Contents/MacOS/Shizi | grep -Eq "x86_64 arm64|arm64 x86_64"
